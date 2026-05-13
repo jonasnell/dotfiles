@@ -664,9 +664,37 @@ require('lazy').setup({
     lazy = false,
     priority = 1000,
     config = function()
-      vim.g.sonokai_enable_italic = true
+      -- vim.g.sonokai_enable_italic = true
+      vim.g.sonokai_style = 'shusia'
+      vim.g.sonokai_transparent_background = 1
+      vim.g.sonokai_better_performance = 1
       vim.cmd.colorscheme 'sonokai'
     end,
+    -- 'loctvl842/monokai-pro.nvim',
+    -- lazy = false,
+    -- priority = 1000,
+    -- config = function()
+    --   require('monokai-pro').setup {
+    --     transparent_background = false,
+    --     terminal_colors = true,
+    --     devicons = true,
+    --     filter = 'spectrum',
+    --     day_night = {
+    --       enable = false,
+    --     },
+    --     styles = {
+    --       comment = { italic = true },
+    --       keyword = { italic = true }, -- local, return, etc.
+    --       type = { italic = true }, -- String, Number, etc.
+    --       storageclass = { italic = true }, -- static, register, etc.
+    --       structure = { italic = true }, -- struct, union, enum, etc.
+    --       parameter = { italic = true }, -- function parameters
+    --       annotation = { italic = true },
+    --       tag_attribute = { italic = true }, -- attribute in html tags
+    --     },
+    --   }
+    --   vim.cmd [[colorscheme monokai-pro]]
+    -- end,
   },
 
   -- Highlight todo, notes, etc in comments
@@ -747,7 +775,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
