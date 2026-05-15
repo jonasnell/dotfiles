@@ -1,0 +1,33 @@
+# use vi-mode for readline
+set editing-mode vi
+
+# different cursor for ins/cmd mode
+set show-mode-in-prompt on
+set vi-ins-mode-string "\1\e[6 q\2"
+set vi-cmd-mode-string "\1\e[2 q\2"
+set keyseq-timeout 0
+
+# add vi ins-mode bindings
+set keymap vi-insert
+"\C-l": clear-screen
+
+# add vi cmd-mode bindings
+set keymap vi-command
+"diw": "lbde"
+"ciw": "lbce"
+"yiw": "lbye"
+
+"diW": "lBdE"
+"ciW": "lBcE"
+"yiW": "lByE"
+
+"daw": "lbdw"
+"caw": "lbdwi"
+"yaw": "lbyw"
+
+"daW": "lBdW"
+"caW": "lBdWi"
+"yaW": "lByW"
+
+"_": "0"
+"g_": "$"

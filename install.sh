@@ -6,7 +6,9 @@ cd "$DOTFILES_DIR"
 
 echo "📦 Running GNU Stow..."
 STOW_PACKAGES=(
+    bash
     nvim
+    vim
 )
 
 for pkg in "${STOW_PACKAGES[@]}"; do
