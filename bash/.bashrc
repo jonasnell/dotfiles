@@ -24,12 +24,28 @@ unset rc
 # Set nvim as default text editor
 export EDITOR=/usr/bin/nvim
 
+# Improve history
+HISTTIMEFORMAT="%F %T  "
+HISTSIZE=-1
+HISTFILESIZE=-1
+export HISTCONTROL=ignoreboth
+shopt -s histappend
+PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND:-}"
+
 # Navigation & listing
 alias ..='cd ..'
 alias ...='cd ../..'
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+alias .5='cd ../../../../..'
 alias l='ls -CF'
 alias la='ls -Ah'
 alias lla='ls -Alh'
+
+# Use trash-cli for rm commands
+alias rm='trash-put'
+alias unlink='trash-put'
+alias del='\rm -iv'
 
 # Vim & Git
 alias v='nvim'
@@ -47,7 +63,7 @@ alias gb='git branch'
 alias glog="git log --graph --oneline --decorate --all"
 
 # Update-all (system + flatpak)
-alias up='sudo dnf upgrade --refresh && flatpak update -y && sudo dnf needs-restarting'
+alias update='sudo dnf upgrade --refresh && flatpak update -y && sudo dnf needs-restarting'
 
 # Mount/unmount Windows drive
 alias mntwin='sudo mount -o uid=1000,gid=1000,umask=022,windows_names UUID=D27EA6587EA6355F /mnt/windows'
