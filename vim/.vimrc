@@ -58,58 +58,41 @@ vnoremap <leader>p "+p
 nnoremap <leader>a :%y+<CR>
 nnoremap <silent> <leader><leader> :noh<CR>
 
-" KALI
-" " use deus colorscheme 
-" set t_Co=256
-" set termguicolors
-" set background=dark
-" colorscheme deus
-" 
-" " vim-airline settings
-" set noshowmode 
-" set laststatus=2
-" let g:airline_theme="deus"
-" let g:airline_powerline_fonts = 0
-" let g:airline#extensions#whitespace#enabled = 0
-" 
-" " make background transparent 
-" highlight Normal guibg=NONE ctermbg=NONE
-" highlight NonText guibg=NONE ctermbg=NONE
-" highlight LineNr guibg=NONE ctermbg=NONE
-" highlight SignColumn guibg=NONE ctermbg=NONE
-" highlight EndOfBuffer guibg=NONE ctermbg=NONE
+" statusline and colorscheme
+set cursorline
+set termguicolors
+colorscheme monokai_pro_spectrum
 
-" UBUNTU 
-" statusline settings
-" set laststatus=2
-" set noshowmode
-" 
-" let g:currentmode={
-"         \ 'n' : 'NORMAL ',
-"         \ 'v' : 'VISUAL ',
-"         \ 'V' : 'V-LINE ',
-"         \ '\' : 'V-BLOCK' ,
-"         \ 'i' : 'INSERT ',
-"         \ 'R' : 'R ',
-"         \ 'Rv' : 'V-REPLACE ',
-"         \ 'c' : 'COMMAND ',
-"         \}
-" 
-" set statusline=
-" set statusline+=%#Icon#
-" set statusline+=\ 𝑽
-" set statusline+=\ %#NormalC#%{(mode()=='n')?'\ NORMAL\ ':''}
-" set statusline+=%#InsertC#%{(mode()=='i')?'\ INSERT\ ':''}
-" set statusline+=%#VisualC#%{(mode()=='v')?'\ VISUAL\ ':''}
-" set statusline+=%#Filename#
-" set statusline+=\ %f
-" set statusline+=%#ReadOnly#
-" set statusline+=\ %r
-" set statusline+=%m
-" set statusline+=%=
-" set statusline+=%#Fileformat#
-" set statusline+=\ %y
-" set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
-" set statusline+=\ [%{&fileformat}\]
-" set statusline+=%#Position#
-" set statusline+=\ [%l/%L]
+set laststatus=2
+set noshowmode
+
+let g:currentmode={
+        \ 'n' : 'NORMAL ',
+        \ 'v' : 'VISUAL ',
+        \ 'V' : 'V-LINE ',
+        \ '\' : 'V-BLOCK' ,
+        \ 'i' : 'INSERT ',
+        \ 'R' : 'R ',
+        \ 'Rv' : 'V-REPLACE ',
+        \ 'c' : 'COMMAND ',
+        \}
+
+set statusline=
+set statusline+=%#Icon#
+set statusline+=\ 
+set statusline+=\ %#NormalC#%{(mode()=='n')?'\ NORMAL\ ':''}
+set statusline+=%#InsertC#%{(mode()=='i')?'\ INSERT\ ':''}
+set statusline+=%#VisualC#%{(mode()=='v')?'\ VISUAL\ ':''}
+set statusline+=%#Filename#
+set statusline+=\ %f
+set statusline+=%#ReadOnly#
+set statusline+=\ %r
+set statusline+=%m
+set statusline+=%=
+set statusline+=%#Fileformat#
+set statusline+=\ %y
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=\ [%{&fileformat}\]
+set statusline+=%#Position#
+set statusline+=\ [%l/%L]
+
