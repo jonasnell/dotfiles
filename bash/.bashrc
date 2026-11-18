@@ -21,8 +21,3 @@ if [ -d ~/.bashrc.d ]; then
 fi
 unset rc
 
-# Auto-start tmux and close terminal on detach/exit
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-    exec tmux new-session -A -s main
-fi
-
