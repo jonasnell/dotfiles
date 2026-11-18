@@ -21,55 +21,8 @@ if [ -d ~/.bashrc.d ]; then
 fi
 unset rc
 
-# Set nvim as default text editor
-export EDITOR=/usr/bin/nvim
+# Auto-start tmux and close terminal on detach/exit
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+    exec tmux new-session -A -s main
+fi
 
-# Improve history
-HISTTIMEFORMAT="%F %T  "
-HISTSIZE=-1
-HISTFILESIZE=-1
-export HISTCONTROL=ignoreboth
-shopt -s histappend
-PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND:-}"
-
-# Navigation & listing
-alias ..='cd ..'
-alias ...='cd ../..'
-alias .3='cd ../../..'
-alias .4='cd ../../../..'
-alias .5='cd ../../../../..'
-alias l='ls -CF'
-alias la='ls -Ah'
-alias lla='ls -Alh'
-
-# Use trash-cli for rm commands
-alias rm='trash-put'
-alias unlink='trash-put'
-alias del='\rm -iv'
-
-# Vim & Git
-alias v='nvim'
-alias vi='nvim'
-alias sv='sudo nvim'
-alias g='git'
-alias gs='git status'
-alias ga='git add'
-alias gaa='git add --all'
-alias gc='git commit -m'
-alias gp='git push'
-alias gl='git pull'
-alias gd='git diff'
-alias gb='git branch'
-alias glog="git log --graph --oneline --decorate --all"
-
-# Update-all (system + flatpak)
-alias update='sudo dnf upgrade --refresh && flatpak update -y && sudo dnf needs-restarting'
-
-# Mount/unmount Windows drive
-alias mntwin='sudo mount -o uid=1000,gid=1000,umask=022,windows_names UUID=D27EA6587EA6355F /mnt/windows'
-alias umntwin='sudo umount /mnt/windows'
-
-# Create and jump to directory
-mkcd() {
-    mkdir -p "$1" && cd "$1"
-}
