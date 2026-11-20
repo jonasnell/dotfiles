@@ -8,7 +8,6 @@ cd "$DOTFILES_DIR"
 # Pre-create parent directories so Stow doesn't symlink whole folders
 mkdir -p "$HOME/.config" "$HOME/.local/share" "$HOME/Vault/.obsidian/plugins"
 
-echo "📦 Running GNU Stow..."
 STOW_PACKAGES=(
     bash
     konsole
@@ -20,13 +19,13 @@ STOW_PACKAGES=(
     wezterm
 )
 
+echo "Installing dotfiles..."
 for pkg in "${STOW_PACKAGES[@]}"; do
-    # Find the highest-level files/folders in each package (excluding .config and .local/share themselves)
     while IFS= read -r -d '' item; do
         rel="${item#$pkg/}"
         target="$HOME/$rel"
         if [[ -e "$target" && ! -L "$target" ]]; then
-            echo "   -> Backing up $rel"
+            echo "  -> Backing up $rel"
             mkdir -p "$BACKUP_DIR/$(dirname "$rel")"
             mv "$target" "$BACKUP_DIR/$rel"
         fi
@@ -39,9 +38,8 @@ for pkg in "${STOW_PACKAGES[@]}"; do
         ! -path "$pkg/Vault/.obsidian/plugins" \
         -prune -print0)
 
-    echo "   -> Stowing $pkg"
+    echo "  -> Stowing $pkg"
     stow -R -d "$DOTFILES_DIR" -t "$HOME" "$pkg"
 done
 
-echo "✅ Dotfiles installation complete!"
-
+echo "✅ Dotfiles installed!"
