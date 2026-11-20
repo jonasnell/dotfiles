@@ -5,13 +5,15 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BACKUP_DIR="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 cd "$DOTFILES_DIR"
 
-mkdir -p "$HOME/.config" "$HOME/.local/share"
+# Pre-create parent directories so Stow doesn't symlink whole folders
+mkdir -p "$HOME/.config" "$HOME/.local/share" "$HOME/Vault/.obsidian/plugins"
 
 echo "📦 Running GNU Stow..."
 STOW_PACKAGES=(
     bash
     konsole
     nvim
+    obsidian
     tmux
     vicinae
     vim
@@ -28,10 +30,13 @@ for pkg in "${STOW_PACKAGES[@]}"; do
             mkdir -p "$BACKUP_DIR/$(dirname "$rel")"
             mv "$target" "$BACKUP_DIR/$rel"
         fi
-    done < <(find "$pkg" -mindepth 1 -maxdepth 3 \
+    done < <(find "$pkg" -mindepth 1 -maxdepth 4 \
         ! -path "$pkg/.config" \
         ! -path "$pkg/.local" \
         ! -path "$pkg/.local/share" \
+        ! -path "$pkg/Vault" \
+        ! -path "$pkg/Vault/.obsidian" \
+        ! -path "$pkg/Vault/.obsidian/plugins" \
         -prune -print0)
 
     echo "   -> Stowing $pkg"

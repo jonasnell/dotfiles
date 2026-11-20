@@ -1,0 +1,9 @@
+{
+  "id": "vim-shortcuts",
+  "name": "vim-shortcuts",
+  "version": "1.0.0",
+  "minAppVersion": "1.4.0",
+  "description": "Lightweight Vim & PDF workflow shortcuts: zg (add word to dictionary), zw/zug (remove word), <Space>a (copy entire note), Ctrl+N/Ctrl+P (navigate menus & popups), and ArrowLeft/ArrowRight or custom hotkeys (full-page PDF navigation from any split pane).",
+  "author": "Local",
+  "isDesktopOnly": false
+}
