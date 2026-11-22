@@ -5,6 +5,7 @@
 vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', { desc = 'Yank to clipboard (motion)' })
 vim.keymap.set('n', '<leader>yy', '"+yy', { desc = 'Yank line to clipboard' })
 vim.keymap.set('n', '<leader>Y', '"+Y', { desc = 'Yank line to clipboard (from current position)' })
+vim.keymap.set('n', '<leader>a', ':%y+<CR>', { desc = 'Yank all to clipboard' })
 
 -- Quickly cut to system clipboard
 vim.keymap.set({ 'n', 'v' }, '<leader>d', '"+d', { desc = 'Cut to clipboard (motion)' })
@@ -16,6 +17,13 @@ vim.keymap.set('n', '<leader>p', '"+p', { desc = 'Paste after from clipboard' })
 vim.keymap.set('v', '<leader>p', '"+p', { desc = 'Paste (visual) from clipboard' })
 vim.keymap.set('n', '<leader>P', '"+P', { desc = 'Paste before from clipboard' })
 vim.keymap.set('v', '<leader>P', '"+P', { desc = 'Paste before (visual) from clipboard' })
+
+-- Stay in visual mode when indenting
+vim.keymap.set('v', '<', '<gv')
+vim.keymap.set('v', '>', '>gv')
+
+-- <S-Tab> for left indentation
+vim.keymap.set('i', '<S-Tab>', '<C-d>')
 
 -- Center screen when scrolling with <C-u> and <C-d>
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
@@ -35,4 +43,3 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-

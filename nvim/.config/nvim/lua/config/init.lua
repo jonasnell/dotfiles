@@ -52,15 +52,15 @@ require('lazy').setup({
   -- See `:help gitsigns` to understand what the configuration keys do
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
+    -- opts = {
+    --   signs = {
+    --     add = { text = '+' },
+    --     change = { text = '~' },
+    --     delete = { text = '_' },
+    --     topdelete = { text = '‾' },
+    --     changedelete = { text = '~' },
+    --   },
+    -- },
   },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
@@ -716,7 +716,20 @@ require('lazy').setup({
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup()
+      require('mini.surround').setup {
+        -- This rebinds all commands to start with 'gz' instead of 's'
+        mappings = {
+          add = 'gza', -- Add surrounding
+          delete = 'gzd', -- Delete surrounding
+          find = 'gzf', -- Find surrounding (right)
+          find_left = 'gzF', -- Find surrounding (left)
+          highlight = 'gzh', -- Highlight surrounding
+          replace = 'gzr', -- Replace surrounding
+          update_n_lines = 'gzn', -- Update n_lines
+          suffix_last = 'l', -- Suffix for left
+          suffix_next = 'n', -- Suffix for next
+        },
+      }
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,

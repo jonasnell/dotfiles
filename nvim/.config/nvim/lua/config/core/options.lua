@@ -2,6 +2,12 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Set indentation to use spaces and default to 2 levels
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
+vim.o.softtabstop = 2
+vim.o.expandtab = true
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
