@@ -6,7 +6,7 @@ BACKUP_DIR="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 cd "$DOTFILES_DIR"
 
 # Pre-create parent directories so Stow doesn't symlink whole folders
-mkdir -p "$HOME/.config" "$HOME/.local/share" "$HOME/Vault/.obsidian/plugins"
+mkdir -p "$HOME/.config" "$HOME/.local/share" "$HOME/.local/share/vicinae" "$HOME/Vault/.obsidian/plugins"
 
 STOW_PACKAGES=(
     bash
@@ -33,6 +33,7 @@ for pkg in "${STOW_PACKAGES[@]}"; do
         ! -path "$pkg/.config" \
         ! -path "$pkg/.local" \
         ! -path "$pkg/.local/share" \
+        ! -path "$pkg/.local/share/vicinae" \
         ! -path "$pkg/Vault" \
         ! -path "$pkg/Vault/.obsidian" \
         ! -path "$pkg/Vault/.obsidian/plugins" \
@@ -43,3 +44,4 @@ for pkg in "${STOW_PACKAGES[@]}"; do
 done
 
 echo "✅ Dotfiles installed!"
+

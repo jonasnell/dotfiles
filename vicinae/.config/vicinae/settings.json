@@ -87,12 +87,8 @@
    },
    "favorites": [
       "shortcuts:sct-432842b33373",
-      "@mmstroik/store.vicinae.kde-system-settings:search-kde-settings",
-      "@ShyAssassin/store.vicinae.vscode-recents:open-recents",
-      "@fbosch/store.vicinae.flathub-search:flathub-search",
-      "files:search",
-      "wm:switch-windows",
-      "clipboard:history"
+      "scripts:note-to-self.sh",
+      "scripts:translate.sh"
    ],
    "fallbacks": [
       "shortcuts:sct-432842b33373",
@@ -154,6 +150,21 @@
          "enabled": true,
          "preferences": {
             "customDirs": []
+         },
+         "entrypoints": {
+            "note-to-self.sh": {
+               "alias": "n"
+            },
+            "translate.sh": {
+               "alias": "t"
+            }
+         }
+      },
+      "shortcuts": {
+         "entrypoints": {
+            "sct-432842b33373": {
+               "alias": "g"
+            }
          }
       }
    }
