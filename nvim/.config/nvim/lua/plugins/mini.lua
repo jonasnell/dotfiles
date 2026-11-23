@@ -42,18 +42,97 @@ require('mini.surround').setup {
   },
 }
 
--- Simple and easy statusline.
---  You could remove this setup call if you don't like it,
---  and try some other statusline plugin
 local statusline = require 'mini.statusline'
--- Set `use_icons` to true if you have a Nerd Font
-statusline.setup { use_icons = vim.g.have_nerd_font }
 
--- You can configure sections in the statusline by overriding their
--- default behavior. For example, here we set the section for
--- cursor location to LINE:COLUMN
----@diagnostic disable-next-line: duplicate-set-field
-statusline.section_location = function() return '%2l:%-2v' end
+local palette = {
+  bg = '#262626',
+  bg_dark = '#222222',
+  pill_bg = '#363537',
+  fg_light = '#f7f1ff',
+  fg_muted = '#69676c',
+  green = '#7bd88f',
+  cyan = '#5ad4e6',
+  purple = '#948ae3',
+  yellow = '#fce566',
+  red = '#fc618d',
+  orange = '#fd9353',
+}
+
+local mode_hl_map = {
+  MiniStatuslineModeNormal = 'StatusPillModeNormal',
+  MiniStatuslineModeInsert = 'StatusPillModeInsert',
+  MiniStatuslineModeVisual = 'StatusPillModeVisual',
+  MiniStatuslineModeReplace = 'StatusPillModeReplace',
+  MiniStatuslineModeCommand = 'StatusPillModeCommand',
+  MiniStatuslineModeOther = 'StatusPillModeOther',
+}
+
+local function set_statusline_hl()
+  local hl = vim.api.nvim_set_hl
+
+  hl(0, 'StatusLine', { fg = palette.fg_light, bg = palette.bg })
+  hl(0, 'StatusLineNC', { fg = palette.fg_muted, bg = palette.bg })
+
+  local modes = {
+    StatusPillModeNormal = palette.green,
+    StatusPillModeInsert = palette.cyan,
+    StatusPillModeVisual = palette.purple,
+    StatusPillModeReplace = palette.red,
+    StatusPillModeCommand = palette.yellow,
+    StatusPillModeOther = palette.orange,
+  }
+  for group, color in pairs(modes) do
+    hl(0, group, { fg = palette.bg_dark, bg = color, bold = true })
+    hl(0, group .. 'Cap', { fg = color, bg = palette.bg })
+  end
+
+  hl(0, 'StatusPillDim', { fg = palette.fg_light, bg = palette.pill_bg })
+  hl(0, 'StatusPillDimBold', { fg = palette.fg_light, bg = palette.pill_bg, bold = true })
+  hl(0, 'StatusPillCyan', { fg = palette.cyan, bg = palette.pill_bg })
+  hl(0, 'StatusPillDimCap', { fg = palette.pill_bg, bg = palette.bg })
+end
+
+local function pill(body_hl, cap_hl, text)
+  if not text or text == '' then return '' end
+  return string.format('%%#%s#%%#%s#%s%%#%s#%%#StatusLine#', cap_hl, body_hl, text, cap_hl)
+end
+
+statusline.setup {
+  use_icons = vim.g.have_nerd_font,
+  content = {
+    active = function()
+      local mode, mode_hl = statusline.section_mode { trunc_width = 120 }
+      local git = statusline.section_git { trunc_width = 40 }
+      local diff = statusline.section_diff { trunc_width = 75 }
+      local diagnostics = statusline.section_diagnostics { trunc_width = 75 }
+      local filename = statusline.section_filename { trunc_width = 140 }
+      local fileinfo = statusline.section_fileinfo { trunc_width = 120 }
+      local location = '%l:%v'
+
+      local pill_hl = mode_hl_map[mode_hl] or 'StatusPillModeOther'
+      local left = { pill(pill_hl, pill_hl .. 'Cap', mode) }
+
+      local devinfo = table.concat(vim.tbl_filter(function(s) return s ~= '' end, { git, diff, diagnostics }), ' ')
+      if devinfo ~= '' then table.insert(left, pill('StatusPillDim', 'StatusPillDimCap', devinfo)) end
+
+      local right = {}
+      if fileinfo ~= '' then table.insert(right, pill('StatusPillCyan', 'StatusPillDimCap', fileinfo)) end
+      table.insert(right, pill('StatusPillDimBold', 'StatusPillDimCap', location))
+
+      return table.concat(left, ' ') .. ' %<' .. filename .. ' %=' .. table.concat(right, ' ')
+    end,
+    inactive = function()
+      local filename = statusline.section_filename { trunc_width = 140 }
+      return '%#StatusLineNC# ' .. filename .. ' %='
+    end,
+  },
+}
+
+set_statusline_hl()
+vim.api.nvim_create_autocmd('ColorScheme', {
+  group = vim.api.nvim_create_augroup('custom-statusline-hl', { clear = true }),
+  callback = set_statusline_hl,
+})
 
 -- ... and there is more!
 --  Check out: https://github.com/nvim-mini/mini.nvim
