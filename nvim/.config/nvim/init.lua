@@ -4,9 +4,10 @@ if vim.g.vscode then
   return
 end
 
--- Otherwise load full config
-require('config')
+-- Enable faster startup by caching compiled Lua modules
+vim.loader.enable()
 
-require('config.autocmds')
 require('config.options')
 require('config.keymaps')
+require('config.autocmds')
+require('plugins')
