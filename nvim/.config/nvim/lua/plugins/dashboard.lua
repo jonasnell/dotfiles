@@ -1,13 +1,5 @@
 vim.pack.add { 'https://github.com/folke/snacks.nvim' }
 
-local function set_dashboard_hl()
-  vim.api.nvim_set_hl(0, 'SnacksDashboardHeader', { fg = '#7bd88f' })
-  vim.api.nvim_set_hl(0, 'SnacksDashboardIcon', { fg = '#5ad4e6' })
-  vim.api.nvim_set_hl(0, 'SnacksDashboardDesc', { fg = '#f7f1ff' })
-  vim.api.nvim_set_hl(0, 'SnacksDashboardKey', { fg = '#fd9353', bold = true })
-  vim.api.nvim_set_hl(0, 'SnacksDashboardFooter', { fg = '#69676c' })
-end
-
 require('snacks').setup {
   dashboard = {
     enabled = true,
@@ -28,8 +20,8 @@ require('snacks').setup {
   },
 }
 
-vim.api.nvim_create_autocmd('User', {
-  group = vim.api.nvim_create_augroup('custom-dashboard-hl', { clear = true }),
-  pattern = 'SnacksDashboardOpened',
-  callback = function() vim.schedule(set_dashboard_hl) end,
-})
+vim.api.nvim_set_hl(0, 'SnacksDashboardHeader', { fg = '#7bd88f' })
+vim.api.nvim_set_hl(0, 'SnacksDashboardIcon', { fg = '#5ad4e6' })
+vim.api.nvim_set_hl(0, 'SnacksDashboardDesc', { fg = '#f7f1ff' })
+vim.api.nvim_set_hl(0, 'SnacksDashboardKey', { fg = '#fd9353', bold = true })
+vim.api.nvim_set_hl(0, 'SnacksDashboardFooter', { fg = '#69676c' })
