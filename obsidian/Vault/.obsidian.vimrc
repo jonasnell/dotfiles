@@ -74,9 +74,9 @@ nmap <Space>sh :splitH<CR>
 nmap <Space>q :closeTab<CR>
 
 " file explorer & sidebars
-exmap toggleLeftSidebar obcommand app:toggle-left-sidebar
+exmap openExplorer obcommand notebook-navigator:open
 exmap toggleRightSidebar obcommand app:toggle-right-sidebar
-nmap <Space>e :toggleLeftSidebar<CR>
+nmap <Space>e :openExplorer<CR>
 nmap <Space>r :toggleRightSidebar<CR>
 
 " fuzzy find & search
