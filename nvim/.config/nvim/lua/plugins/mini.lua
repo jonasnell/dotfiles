@@ -101,7 +101,7 @@ statusline.setup {
   use_icons = vim.g.have_nerd_font,
   content = {
     active = function()
-      local mode, mode_hl = statusline.section_mode { trunc_width = 120 }
+      local mode, mode_hl = statusline.section_mode { trunc_width = 60 }
       local git = statusline.section_git { trunc_width = 40 }
       local diff = statusline.section_diff { trunc_width = 75 }
       local diagnostics = statusline.section_diagnostics { trunc_width = 75 }
