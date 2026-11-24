@@ -156,23 +156,32 @@ module.exports = class VimShortcuts extends Plugin {
       new Notice("Copied entire note to clipboard");
     });
 
+    Vim.defineAction("dictaddVisual", (cm) => {
+      this.modifyDict("add", cm.getSelection()?.trim());
+      Vim.exitVisualMode(cm);
+    });
+    Vim.defineAction("dictremoveVisual", (cm) => {
+      this.modifyDict("remove", cm.getSelection()?.trim());
+      Vim.exitVisualMode(cm);
+    });
+
     Vim.map("zg", ":dictadd<CR>", "normal");
     Vim.map("zw", ":dictremove<CR>", "normal");
     Vim.map("zug", ":dictremove<CR>", "normal");
-    Vim.map("zg", ":dictadd<CR>", "visual");
-    Vim.map("zw", ":dictremove<CR>", "visual");
-    Vim.map("zug", ":dictremove<CR>", "visual");
+    Vim.mapCommand("zg", "action", "dictaddVisual", {}, { context: "visual" });
+    Vim.mapCommand("zw", "action", "dictremoveVisual", {}, { context: "visual" });
+    Vim.mapCommand("zug", "action", "dictremoveVisual", {}, { context: "visual" });
     Vim.map("<Space>a", ":yankall<CR>", "normal");
     this.vimReady = true;
   }
 
-  modifyDict(action) {
+  modifyDict(action, selectedWord) {
     const editor = this.app.workspace.activeEditor?.editor;
     let session;
     try { session = window.require?.("electron")?.remote?.getCurrentWebContents?.()?.session; } catch {}
     if (!editor || !session) return;
 
-    let word = editor.getSelection()?.trim();
+    let word = selectedWord || editor.getSelection()?.trim();
     if (!word) {
       const { line, ch } = editor.getCursor();
       for (const m of (editor.getLine(line) || "").matchAll(/[\p{L}\p{N}]+(?:['’][\p{L}\p{N}]+)*/gu)) {
