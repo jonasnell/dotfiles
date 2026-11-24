@@ -1,10 +1,31 @@
 vim.pack.add { 'https://github.com/folke/snacks.nvim' }
 
+local header = [[
+███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
+████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
+██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
+██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
+██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
+╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]]
+
+local function colored_header()
+  local lines = vim.split(header, '\n')
+  local chunks = {}
+  for i, line in ipairs(lines) do
+    for ch in line:gmatch '[%z\1-\127\194-\244][\128-\191]*' do
+      local hl = (ch == '█') and 'SnacksDashboardHeader' or 'SnacksDashboardHeaderShadow'
+      table.insert(chunks, { ch, hl = hl })
+    end
+    if i < #lines then table.insert(chunks, { '\n' }) end
+  end
+  return chunks
+end
+
 require('snacks').setup {
   dashboard = {
     enabled = true,
     sections = {
-      { section = 'header' },
+      { text = colored_header(), align = 'center', padding = 2 },
       { section = 'keys', gap = 1, padding = 1 },
     },
     preset = {
@@ -20,8 +41,9 @@ require('snacks').setup {
   },
 }
 
-vim.api.nvim_set_hl(0, 'SnacksDashboardHeader', { fg = '#7bd88f' })
-vim.api.nvim_set_hl(0, 'SnacksDashboardIcon', { fg = '#5ad4e6' })
+vim.api.nvim_set_hl(0, 'SnacksDashboardHeader', { fg = '#fd9353' })
+vim.api.nvim_set_hl(0, 'SnacksDashboardHeaderShadow', { fg = '#5ad4e6' })
+vim.api.nvim_set_hl(0, 'SnacksDashboardIcon', { fg = '#7bd88f' })
 vim.api.nvim_set_hl(0, 'SnacksDashboardDesc', { fg = '#f7f1ff' })
-vim.api.nvim_set_hl(0, 'SnacksDashboardKey', { fg = '#fd9353', bold = true })
+vim.api.nvim_set_hl(0, 'SnacksDashboardKey', { fg = '#5ad4e6', bold = true })
 vim.api.nvim_set_hl(0, 'SnacksDashboardFooter', { fg = '#69676c' })
