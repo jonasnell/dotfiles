@@ -30,14 +30,6 @@ require('monokai-pro').setup {
       accent6 = '#948ae3', -- purple
     }
   end,
-  override = function(_)
-    return {
-      Visual = { bg = '#414550' },
-      NormalFloat = { bg = '#262626' },
-      NeoTreeNormal = { bg = '#262626' },
-      NeoTreeNormalNC = { bg = '#262626' },
-    }
-  end,
 }
 
 vim.cmd.colorscheme 'monokai-pro'

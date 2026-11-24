@@ -1,21 +1,12 @@
 vim.pack.add { 'https://github.com/folke/snacks.nvim' }
 
--- Change accent to '#7bd88f' (green) or '#5ad4e6' (cyan/blue)
-local accent = '#7bd88f'
-
 local function set_dashboard_hl()
-  vim.api.nvim_set_hl(0, 'SnacksDashboardHeader', { fg = accent })
-  vim.api.nvim_set_hl(0, 'SnacksDashboardIcon', { fg = accent })
-  vim.api.nvim_set_hl(0, 'SnacksDashboardKey', { fg = '#5ad4e6', bold = true })
+  vim.api.nvim_set_hl(0, 'SnacksDashboardHeader', { fg = '#7bd88f' })
+  vim.api.nvim_set_hl(0, 'SnacksDashboardIcon', { fg = '#5ad4e6' })
   vim.api.nvim_set_hl(0, 'SnacksDashboardDesc', { fg = '#f7f1ff' })
+  vim.api.nvim_set_hl(0, 'SnacksDashboardKey', { fg = '#fd9353', bold = true })
   vim.api.nvim_set_hl(0, 'SnacksDashboardFooter', { fg = '#69676c' })
 end
-
-set_dashboard_hl()
-vim.api.nvim_create_autocmd('ColorScheme', {
-  group = vim.api.nvim_create_augroup('custom-dashboard-hl', { clear = true }),
-  callback = set_dashboard_hl,
-})
 
 require('snacks').setup {
   dashboard = {
@@ -36,3 +27,9 @@ require('snacks').setup {
     },
   },
 }
+
+vim.api.nvim_create_autocmd('User', {
+  group = vim.api.nvim_create_augroup('custom-dashboard-hl', { clear = true }),
+  pattern = 'SnacksDashboardOpened',
+  callback = function() vim.schedule(set_dashboard_hl) end,
+})
