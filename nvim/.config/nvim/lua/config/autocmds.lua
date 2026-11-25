@@ -11,14 +11,14 @@
 --   callback = function(ev) ... end  (ev.buf, ev.match, ev.file)
 --   command  = Vim Ex command string (alternative to `callback`)
 --   desc     = 'Description'
---   once     = true (run once, then --
+--   once     = true (run once, then delete)
 --
 -- Example:
 --   vim.api.nvim_create_autocmd('FileType', {
 --     group = vim.api.nvim_create_augroup('my-group', { clear = true }),
 --     pattern = 'markdown',
 --     command = 'setlocal wrap',
---   })delete)
+--   })
 
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd('TextYankPost', {
