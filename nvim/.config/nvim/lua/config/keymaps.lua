@@ -68,6 +68,17 @@ vim.keymap.set('n', '<C-Down>', '<cmd>resize -2<CR>', { desc = 'Decrease window 
 vim.keymap.set('n', '<C-Left>', '<cmd>vertical resize -2<CR>', { desc = 'Decrease window width' })
 vim.keymap.set('n', '<C-Right>', '<cmd>vertical resize +2<CR>', { desc = 'Increase window width' })
 
+-- [[ Toggles ]]
+vim.keymap.set('n', '<leader>ts', function()
+  vim.wo.spell = not vim.wo.spell
+  vim.notify('Spell check: ' .. (vim.wo.spell and 'ON' or 'OFF'))
+end, { desc = '[T]oggle [S]pell check' })
+
+vim.keymap.set('n', '<leader>tl', function()
+  vim.wo.wrap = not vim.wo.wrap
+  vim.notify('Line wrap: ' .. (vim.wo.wrap and 'ON' or 'OFF'))
+end, { desc = '[T]oggle [L]ine wrap' })
+
 -- [[ Diagnostics & Terminal ]]
 vim.keymap.set('n', '<leader>drq', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })

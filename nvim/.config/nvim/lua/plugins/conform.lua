@@ -3,6 +3,8 @@ vim.pack.add { 'https://github.com/stevearc/conform.nvim' }
 require('conform').setup {
   notify_on_error = false,
   format_on_save = function(bufnr)
+    if vim.g.disable_autoformat then return nil end
+
     local enabled_filetypes = {
       -- lua = true,
       -- python = true,
@@ -28,3 +30,8 @@ require('conform').setup {
 }
 
 vim.keymap.set({ 'n', 'v' }, '<leader>f', function() require('conform').format { async = true } end, { desc = '[F]ormat buffer' })
+
+vim.keymap.set('n', '<leader>tf', function()
+  vim.g.disable_autoformat = not vim.g.disable_autoformat
+  vim.notify('Format on save: ' .. (vim.g.disable_autoformat and 'OFF' or 'ON'))
+end, { desc = '[T]oggle [F]ormat on save' })
