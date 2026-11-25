@@ -11,6 +11,7 @@ vim.o.cursorline = true      -- Highlight the current line
 vim.o.scrolloff = 10         -- Minimum lines to keep above/below cursor
 vim.o.showmode = false       -- Hide mode (already shown in statusline)
 vim.o.ruler = false          -- Hide built-in ruler when statusline is hidden
+vim.o.laststatus = 3         -- Single global statusline across all splits
 vim.o.fillchars = 'eob: '    -- Hide ~ symbol on empty lines
 
 -- [[ Indentation ]]
