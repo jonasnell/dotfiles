@@ -1,6 +1,3 @@
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
---
 -- Signature:
 --   vim.keymap.set(mode, lhs, rhs, opts)
 --
@@ -23,42 +20,54 @@
 --   vim.keymap.set('n', '<leader>w', '<cmd>w<CR>', { desc = 'Save file' })
 --   vim.keymap.set({ 'n', 'v' }, '<leader>x', function() print('hi') end, { desc = 'Run Lua', silent = true })
 
--- Quickly yank to system clipboard
+-- [[ General & Files ]]
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlights' })
+vim.keymap.set('n', '<leader>w', '<cmd>w<CR>', { desc = '[W]rite file' })
+vim.keymap.set('n', '<leader>q', function() require('mini.bufremove').delete(0, false) end, { desc = '[Q]uit (close) buffer' })
+vim.keymap.set('n', '<leader>Q', '<cmd>qa<CR>', { desc = '[Q]uit all' })
+
+-- [[ Clipboard ]]
 vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', { desc = 'Yank to clipboard (motion)' })
 vim.keymap.set('n', '<leader>yy', '"+yy', { desc = 'Yank line to clipboard' })
-vim.keymap.set('n', '<leader>Y', '"+Y', { desc = 'Yank line to clipboard (from current position)' })
-vim.keymap.set('n', '<leader>a', ':%y+<CR>', { desc = 'Yank all to clipboard' })
+vim.keymap.set('n', '<leader>Y', '"+Y', { desc = 'Yank line to clipboard (from cursor)' })
+vim.keymap.set('n', '<leader>a', '<cmd>%y+<CR>', { desc = 'Yank all to clipboard' })
 
--- Quickly cut to system clipboard
 vim.keymap.set({ 'n', 'v' }, '<leader>d', '"+d', { desc = 'Cut to clipboard (motion)' })
 vim.keymap.set('n', '<leader>dd', '"+dd', { desc = 'Cut line to clipboard' })
-vim.keymap.set('n', '<leader>D', '"+D', { desc = 'Cut line to clipboard (from current position)' })
+vim.keymap.set('n', '<leader>D', '"+D', { desc = 'Cut line to clipboard (from cursor)' })
 
--- Quickly paste from system clipboard
-vim.keymap.set('n', '<leader>p', '"+p', { desc = 'Paste after from clipboard' })
-vim.keymap.set('v', '<leader>p', '"+p', { desc = 'Paste (visual) from clipboard' })
-vim.keymap.set('n', '<leader>P', '"+P', { desc = 'Paste before from clipboard' })
-vim.keymap.set('v', '<leader>P', '"+P', { desc = 'Paste before (visual) from clipboard' })
+vim.keymap.set({ 'n', 'v' }, '<leader>p', '"+p', { desc = 'Paste after from clipboard' })
+vim.keymap.set({ 'n', 'v' }, '<leader>P', '"+P', { desc = 'Paste before from clipboard' })
 
--- Stay in visual mode when indenting
-vim.keymap.set('v', '<', '<gv')
-vim.keymap.set('v', '>', '>gv')
+-- [[ Editing ]]
+vim.keymap.set('i', '<S-Tab>', '<C-d>', { desc = 'Unindent line' })
+vim.keymap.set('v', '<', '<gv', { desc = 'Indent left and reselect' })
+vim.keymap.set('v', '>', '>gv', { desc = 'Indent right and reselect' })
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selection down' })
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
 
--- <S-Tab> for left indentation
-vim.keymap.set('i', '<S-Tab>', '<C-d>')
+-- [[ Navigation & Scrolling ]]
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Scroll up and center' })
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Scroll down and center' })
+vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Next search match (centered)' })
+vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Prev search match (centered)' })
 
--- Center screen when scrolling with <C-u> and <C-d>
-vim.keymap.set('n', '<C-u>', '<C-u>zz')
-vim.keymap.set('n', '<C-d>', '<C-d>zz')
+-- [[ Buffers ]]
+vim.keymap.set('n', '<S-h>', '<cmd>bprevious<CR>', { desc = 'Previous buffer' })
+vim.keymap.set('n', '<S-l>', '<cmd>bnext<CR>', { desc = 'Next buffer' })
+vim.keymap.set('n', '<leader>bb', '<cmd>e #<CR>', { desc = 'Switch to alternate buffer' })
 
--- Clear highlights on search when pressing <Esc> in normal mode
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
--- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
--- Keybinds to make split navigation easier.
+-- [[ Windows & Splits ]]
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+vim.keymap.set('n', '<C-Up>', '<cmd>resize +2<CR>', { desc = 'Increase window height' })
+vim.keymap.set('n', '<C-Down>', '<cmd>resize -2<CR>', { desc = 'Decrease window height' })
+vim.keymap.set('n', '<C-Left>', '<cmd>vertical resize -2<CR>', { desc = 'Decrease window width' })
+vim.keymap.set('n', '<C-Right>', '<cmd>vertical resize +2<CR>', { desc = 'Increase window width' })
+
+-- [[ Diagnostics & Terminal ]]
+vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'Open [D]iagnostic [Q]uickfix list' })
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })

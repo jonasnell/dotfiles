@@ -1,6 +1,3 @@
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands` and `:help events`
---
 -- Signature:
 --   vim.api.nvim_create_autocmd(event, opts)
 --
