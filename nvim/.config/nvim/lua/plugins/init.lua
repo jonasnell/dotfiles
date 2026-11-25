@@ -71,3 +71,6 @@ require('plugins.conform')
 require('plugins.treesitter')
 -- require('plugins.lint')
 -- require('plugins.debug')
+
+-- Vim Practice
+require('plugins.practice')
