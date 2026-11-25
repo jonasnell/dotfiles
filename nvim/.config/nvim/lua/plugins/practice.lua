@@ -1,6 +1,4 @@
-vim.pack.add {
-  'https://github.com/szymonwilczek/vim-be-better',
-}
+vim.pack.add { 'https://github.com/szymonwilczek/vim-be-better' }
 
 -- Remove floating window background color only for :VimBeBetter
 vim.api.nvim_create_autocmd('VimEnter', {
