@@ -16,8 +16,6 @@ end
 
 -- This autocommand runs after a plugin is installed or updated and
 --  runs the appropriate build command for that plugin if necessary.
---
--- See `:help vim.pack-events`
 vim.api.nvim_create_autocmd('PackChanged', {
   callback = function(ev)
     local name, kind = ev.data.spec.name, ev.data.kind
@@ -34,28 +32,24 @@ vim.api.nvim_create_autocmd('PackChanged', {
   end,
 })
 
--- Load theme and icons first so downstream plugins (telescope, neo-tree) pick them up
+-- UI & appearance (load theme and icons first for downstream plugins)
 require('plugins.colorscheme')
 require('plugins.mini')
-
--- Core UI & editing
-require('plugins.which-key')
-require('plugins.gitsigns')
-require('plugins.guess-indent')
-require('plugins.autopairs')
-require('plugins.neo-tree')
-require('plugins.indent_line')
 require('plugins.dashboard')
-require('plugins.flash')
+require('plugins.indent_line')
+require('plugins.gitsigns')
+require('plugins.which-key')
 
--- Navigation, LSP, completion, formatting, syntax
+-- Navigation & editing
 require('plugins.telescope')
-require('plugins.lsp')
+require('plugins.neo-tree')
+require('plugins.flash')
+require('plugins.autopairs')
+require('plugins.guess-indent')
+require('plugins.practice')
+
+-- Coding & LSP (load completion before lsp for capabilities)
 require('plugins.completion')
+require('plugins.lsp')
 require('plugins.conform')
 require('plugins.treesitter')
--- require('plugins.lint')
--- require('plugins.debug')
-
--- Vim Practice
-require('plugins.practice')
