@@ -18,7 +18,7 @@
    "activate_on_single_click": false,
    "escape_key_behavior": "navigate_back",
    "favicon_service": "twenty",
-   "keybinding": "default",
+   "keybinding": "emacs",
    "pixmap_cache_mb": 50,
    "search_files_in_root": false,
    "font": {
