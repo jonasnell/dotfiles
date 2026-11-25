@@ -22,6 +22,7 @@ local function colored_header()
 end
 
 require('snacks').setup {
+  lazygit = { enabled = true },
   dashboard = {
     enabled = true,
     sections = {
@@ -47,3 +48,5 @@ vim.api.nvim_set_hl(0, 'SnacksDashboardIcon', { fg = '#7bd88f' })
 vim.api.nvim_set_hl(0, 'SnacksDashboardDesc', { fg = '#f7f1ff' })
 vim.api.nvim_set_hl(0, 'SnacksDashboardKey', { fg = '#5ad4e6', bold = true })
 vim.api.nvim_set_hl(0, 'SnacksDashboardFooter', { fg = '#69676c' })
+
+vim.keymap.set('n', '<leader>gg', function() Snacks.lazygit() end, { desc = 'Open Lazy[g]it' })

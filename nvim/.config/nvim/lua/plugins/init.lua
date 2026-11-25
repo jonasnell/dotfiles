@@ -32,7 +32,7 @@ vim.api.nvim_create_autocmd('PackChanged', {
 -- UI & appearance (load theme and icons first for downstream plugins)
 require('plugins.colorscheme')
 require('plugins.mini')
-require('plugins.dashboard')
+require('plugins.snacks')
 require('plugins.indent_line')
 require('plugins.gitsigns')
 require('plugins.which-key')
