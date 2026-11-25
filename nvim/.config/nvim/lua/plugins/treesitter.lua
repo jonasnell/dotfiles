@@ -3,8 +3,22 @@ vim.pack.add { { src = 'https://github.com/nvim-treesitter/nvim-treesitter', ver
 local ts = require('nvim-treesitter')
 
 local parsers = {
-  'bash', 'c', 'diff', 'html', 'lua', 'luadoc',
-  'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc',
+  'bash',
+  'bibtex',
+  'c',
+  'diff',
+  'html',
+  'latex',
+  'lua',
+  'luadoc',
+  'markdown',
+  'markdown_inline',
+  'python',
+  'query',
+  'rust',
+  'toml',
+  'vim',
+  'vimdoc',
 }
 ts.install(parsers)
 

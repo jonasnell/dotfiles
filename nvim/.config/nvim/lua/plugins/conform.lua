@@ -4,8 +4,8 @@ require('conform').setup {
   notify_on_error = false,
   format_on_save = function(bufnr)
     local enabled_filetypes = {
-      lua = true,
-      python = true,
+      -- lua = true,
+      -- python = true,
     }
     if enabled_filetypes[vim.bo[bufnr].filetype] then
       return { timeout_ms = 500 }
@@ -17,7 +17,13 @@ require('conform').setup {
     lsp_format = 'fallback',
   },
   formatters_by_ft = {
+    lua = { 'stylua' },
+    python = { 'ruff_organize_imports', 'ruff_format' },
     rust = { 'rustfmt' },
+    sh = { 'shfmt' },
+    bash = { 'shfmt' },
+    tex = { 'tex-fmt' },
+    markdown = { 'prettier' },
   },
 }
 
