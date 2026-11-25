@@ -7,6 +7,10 @@ vim.g.maplocalleader = ' '
 vim.o.number = true
 vim.o.relativenumber = true
 
+-- Use smart case for search (/, ?)
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
 -- [[ Keymaps ]]
 -- Disable default functionality of <Space>
 vim.keymap.set({ 'n', 'v', 'o' }, '<Space>', '<Nop>', { silent = true })
@@ -33,14 +37,11 @@ vim.keymap.set('v', '<', '<gv', { desc = 'Indent left and re-select' })
 vim.keymap.set('v', '>', '>gv', { desc = 'Indent right and re-select' })
 
 -- -- Center screen when scrolling with <C-u> and <C-d>
--- vim.keymap.set('n', '<C-u>', '<C-u>zz')
--- vim.keymap.set('n', '<C-d>', '<C-d>zz')
+vim.keymap.set('n', '<C-u>', '<C-u>zz')
+vim.keymap.set('n', '<C-d>', '<C-d>zz')
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
--- -- Diagnostic keymaps
--- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Keybinds to make split navigation easier.
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
@@ -49,65 +50,24 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- [[ Autocmds ]]
-local group = vim.api.nvim_create_augroup('RelNumToggle', { clear = true })
-
--- Disable relativelinenumber when entering insert
+-- Toggle relativelinenumber when entering insert/normal
+local group = vim.api.nvim_create_augroup('vscode-relnum-toggle', { clear = true })
 vim.api.nvim_create_autocmd('ModeChanged', {
   group = group,
   pattern = '*:i',
-  callback = function()
-    vim.wo.relativenumber = false
-  end,
+  callback = function() vim.wo.relativenumber = false end,
 })
-
--- Enable relativenumber when entering normal mode
 vim.api.nvim_create_autocmd('ModeChanged', {
   group = group,
   pattern = '*:n',
-  callback = function()
-    vim.wo.relativenumber = true
-  end,
+  callback = function() vim.wo.relativenumber = true end,
 })
 
 -- Highlight on yank
-vim.api.nvim_create_autocmd("TextYankPost", {
-  callback = function()
-    vim.highlight.on_yank({
-      higroup = "IncSearch",
-      timeout = 200,
-    })
-  end,
+vim.api.nvim_create_autocmd('TextYankPost', {
+  group = vim.api.nvim_create_augroup('vscode-highlight-yank', { clear = true }),
+  callback = function() vim.hl.on_yank { higroup = 'IncSearch', timeout = 200 } end,
 })
 
 -- [[ Plugins ]]
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git", "clone", "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
-
--- Load Plugins
-require("lazy").setup({
-  {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    opts = {
-      modes = {
-        char = {
-          enabled = true,
-          jump_labels = false,
-          multi_line = false,
-          highlight = { backdrop = false },
-        },
-      },
-    },
-  },
-})
-
--- Custom Colors
--- vim.api.nvim_set_hl(0, "FlashMatch", { link = "IncSearch" })
--- vim.api.nvim_set_hl(0, "FlashCurrent", { link = "IncSearch" })
--- vim.api.nvim_set_hl(0, "FlashCursor", { link = "IncSearch" })
+require('plugins.flash')
