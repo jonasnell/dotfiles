@@ -16,21 +16,19 @@ vim.o.smartcase = true
 vim.keymap.set({ 'n', 'v', 'o' }, '<Space>', '<Nop>', { silent = true })
 
 -- Quickly yank to system clipboard
-vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', { desc = 'Yank to clipboard (motion)' })
+vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', { desc = 'Yank to clipboard' })
 vim.keymap.set('n', '<leader>yy', '"+yy', { desc = 'Yank line to clipboard' })
-vim.keymap.set('n', '<leader>Y', '"+Y', { desc = 'Yank line to clipboard (from current position)' })
+vim.keymap.set('n', '<leader>Y', '"+Y', { desc = 'Yank line to clipboard (from cursor)' })
 vim.keymap.set('n', '<leader>a', '<cmd>%y+<CR>', { desc = 'Yank all to clipboard' })
 
 -- Quickly cut to system clipboard
-vim.keymap.set({ 'n', 'v' }, '<leader>d', '"+d', { desc = 'Cut to clipboard (motion)' })
+vim.keymap.set({ 'n', 'v' }, '<leader>d', '"+d', { desc = 'Cut to clipboard' })
 vim.keymap.set('n', '<leader>dd', '"+dd', { desc = 'Cut line to clipboard' })
-vim.keymap.set('n', '<leader>D', '"+D', { desc = 'Cut line to clipboard (from current position)' })
+vim.keymap.set('n', '<leader>D', '"+D', { desc = 'Cut line to clipboard (from cursor)' })
 
 -- Quickly paste from system clipboard
-vim.keymap.set('n', '<leader>p', '"+p', { desc = 'Paste after from clipboard' })
-vim.keymap.set('v', '<leader>p', '"+p', { desc = 'Paste (visual) from clipboard' })
-vim.keymap.set('n', '<leader>P', '"+P', { desc = 'Paste before from clipboard' })
-vim.keymap.set('v', '<leader>P', '"+P', { desc = 'Paste before (visual) from clipboard' })
+vim.keymap.set({ 'n', 'v' }, '<leader>p', '"+p', { desc = 'Paste after from clipboard' })
+vim.keymap.set({ 'n', 'v' }, '<leader>P', '"+P', { desc = 'Paste before from clipboard' })
 
 -- Stay in visual mode after indenting
 vim.keymap.set('v', '<', '<gv', { desc = 'Indent left and re-select' })
