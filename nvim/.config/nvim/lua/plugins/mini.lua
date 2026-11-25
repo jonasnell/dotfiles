@@ -1,20 +1,15 @@
 vim.pack.add { 'https://github.com/nvim-mini/mini.nvim' }
 
--- If a nerd font is available, load the icons module for pretty icons in various plugins.
+-- [[ Icons ]]
 if vim.g.have_nerd_font then
-  require('mini.icons').setup()
-  -- Used for backwards compatibility with plugins that require `nvim-web-devicons` (e.g. telescope.nvim)
-  MiniIcons.mock_nvim_web_devicons()
+  local icons = require('mini.icons')
+  icons.setup()
+  icons.mock_nvim_web_devicons()
 end
 
--- Better Around/Inside textobjects
---
--- Examples:
---  - va)  - [V]isually select [A]round [)]paren
---  - yiiq - [Y]ank [I]nside [I]+1 [Q]uote
---  - ci'  - [C]hange [I]nside [']quote
+-- [[ Textobjects & Editing ]]
 require('mini.ai').setup {
-  -- NOTE: Avoid conflicts with the built-in incremental selection mappings on Neovim>=0.12 (see `:help treesitter-incremental-selection`)
+  -- Avoid conflicts with Neovim 0.12's built-in incremental selection
   mappings = {
     around_next = 'aa',
     inside_next = 'ii',
@@ -22,27 +17,24 @@ require('mini.ai').setup {
   n_lines = 500,
 }
 
--- Add/delete/replace surroundings (brackets, quotes, etc.)
---
--- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
--- - sd'   - [S]urround [D]elete [']quotes
--- - sr)'  - [S]urround [R]eplace [)] [']
 require('mini.surround').setup {
-  -- This rebinds all commands to start with 'gz' instead of 's'
   mappings = {
-    add = 'gza', -- Add surrounding
-    delete = 'gzd', -- Delete surrounding
-    find = 'gzf', -- Find surrounding (right)
-    find_left = 'gzF', -- Find surrounding (left)
-    highlight = 'gzh', -- Highlight surrounding
-    replace = 'gzr', -- Replace surrounding
-    update_n_lines = 'gzn', -- Update n_lines
-    suffix_last = 'l', -- Suffix for left
-    suffix_next = 'n', -- Suffix for next
+    add = 'gza',
+    delete = 'gzd',
+    find = 'gzf',
+    find_left = 'gzF',
+    highlight = 'gzh',
+    replace = 'gzr',
+    update_n_lines = 'gzn',
+    suffix_last = 'l',
+    suffix_next = 'n',
   },
 }
 
-local statusline = require 'mini.statusline'
+require('mini.bufremove').setup()
+
+-- [[ Statusline ]]
+local statusline = require('mini.statusline')
 
 local palette = {
   bg = '#262626',
@@ -107,7 +99,6 @@ statusline.setup {
       local diagnostics = statusline.section_diagnostics { trunc_width = 75 }
       local filename = statusline.section_filename { trunc_width = 140 }
       local fileinfo = statusline.section_fileinfo { trunc_width = 120 }
-      local location = '%l:%v'
 
       local pill_hl = mode_hl_map[mode_hl] or 'StatusPillModeOther'
       local left = { pill(pill_hl, pill_hl .. 'Cap', mode) }
@@ -117,13 +108,12 @@ statusline.setup {
 
       local right = {}
       if fileinfo ~= '' then table.insert(right, pill('StatusPillCyan', 'StatusPillDimCap', fileinfo)) end
-      table.insert(right, pill('StatusPillDimBold', 'StatusPillDimCap', location))
+      table.insert(right, pill('StatusPillDimBold', 'StatusPillDimCap', '%l:%v'))
 
       return table.concat(left, ' ') .. ' %<' .. filename .. ' %=' .. table.concat(right, ' ')
     end,
     inactive = function()
-      local filename = statusline.section_filename { trunc_width = 140 }
-      return '%#StatusLineNC# ' .. filename .. ' %='
+      return '%#StatusLineNC# ' .. statusline.section_filename { trunc_width = 140 } .. ' %='
     end,
   },
 }
@@ -133,6 +123,3 @@ vim.api.nvim_create_autocmd('ColorScheme', {
   group = vim.api.nvim_create_augroup('custom-statusline-hl', { clear = true }),
   callback = set_statusline_hl,
 })
-
--- ... and there is more!
---  Check out: https://github.com/nvim-mini/mini.nvim
