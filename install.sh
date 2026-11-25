@@ -8,7 +8,7 @@ cd "$DOTFILES_DIR"
 # Pre-create parent directories so Stow doesn't symlink whole folders
 mkdir -p "$HOME/.config" "$HOME/.local/share" "$HOME/.local/share/vicinae" "$HOME/Vault/.obsidian/plugins"
 
-STOW_PACKAGES=(
+ALL_PACKAGES=(
     bash
     konsole
     nvim
@@ -19,7 +19,23 @@ STOW_PACKAGES=(
     wezterm
 )
 
-echo "Installing dotfiles..."
+if [[ $# -gt 0 ]]; then
+    STOW_PACKAGES=()
+    for arg in "$@"; do
+        pkg="${arg%/}"
+        if [[ " ${ALL_PACKAGES[*]} " == *" $pkg "* ]]; then
+            STOW_PACKAGES+=("$pkg")
+        else
+            echo "❌ Unknown package: '$pkg'" >&2
+            echo "Available packages: ${ALL_PACKAGES[*]}" >&2
+            exit 1
+        fi
+    done
+else
+    STOW_PACKAGES=("${ALL_PACKAGES[@]}")
+fi
+
+echo "Installing dotfiles (${STOW_PACKAGES[*]})..."
 for pkg in "${STOW_PACKAGES[@]}"; do
     while IFS= read -r -d '' item; do
         rel="${item#$pkg/}"
@@ -44,4 +60,3 @@ for pkg in "${STOW_PACKAGES[@]}"; do
 done
 
 echo "✅ Dotfiles installed!"
-
