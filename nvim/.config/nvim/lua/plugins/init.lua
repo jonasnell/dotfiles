@@ -14,8 +14,7 @@ local function run_build(name, cmd, cwd)
   end
 end
 
--- This autocommand runs after a plugin is installed or updated and
---  runs the appropriate build command for that plugin if necessary.
+-- Runs after plugin is installed/updated, running build if necessary
 vim.api.nvim_create_autocmd('PackChanged', {
   callback = function(ev)
     local name, kind = ev.data.spec.name, ev.data.kind
@@ -23,8 +22,6 @@ vim.api.nvim_create_autocmd('PackChanged', {
 
     if name == 'telescope-fzf-native.nvim' and vim.fn.executable 'make' == 1 then
       run_build(name, { 'make' }, ev.data.path)
-    elseif name == 'LuaSnip' and vim.fn.has 'win32' ~= 1 and vim.fn.executable 'make' == 1 then
-      run_build(name, { 'make', 'install_jsregexp' }, ev.data.path)
     elseif name == 'nvim-treesitter' then
       if not ev.data.active then vim.cmd.packadd 'nvim-treesitter' end
       vim.cmd 'TSUpdate'
