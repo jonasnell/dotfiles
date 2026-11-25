@@ -4,11 +4,12 @@ vim.pack.add {
   'https://github.com/MunifTanjim/nui.nvim',
 }
 
-vim.keymap.set('n', '<leader>e', '<Cmd>Neotree toggle reveal<CR>', { desc = 'Toggle [E]xplorer', silent = true })
+vim.keymap.set('n', '<leader>e', '<Cmd>Neotree dir=. toggle reveal<CR>', { desc = 'Toggle [E]xplorer', silent = true })
 vim.keymap.set('n', '\\', '<Cmd>Neotree reveal<CR>', { desc = 'NeoTree reveal', silent = true })
 
 require('neo-tree').setup {
   filesystem = {
+    follow_current_file = { enabled = true },
     window = {
       mappings = {
         ['<space>'] = 'none', -- Keep <leader> usable while focused inside neo-tree
